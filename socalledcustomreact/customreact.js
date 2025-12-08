@@ -3,7 +3,7 @@ let rootelement=document.getElementById('meow')
 let customelement={
     type : 'a',
     props : {
-        href : 'www.google.com',
+        href : 'https://x.com/qq22903773/status/1978700314107670964',
         target : '_target'
     },
     text : 'click meow'
