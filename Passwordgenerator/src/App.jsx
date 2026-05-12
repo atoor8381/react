@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
@@ -6,7 +6,10 @@ function App() {
   const [numAllowed, setnumallowed] = useState(false)
   const [charallowed, setcharallowed] = useState(false)
   const [defaultpassword, setdefaultpassword] = useState("")
-  const passwordgenerator = useEffect(()=>{
+  
+  const passwordRef = useRef(null)
+  
+  useEffect(() => {
     let password = ""
     let string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     if (numAllowed) {
@@ -17,14 +20,20 @@ function App() {
     }
 
     for (let i = 0; i < length; i++) {
-      let char = Math.floor(Math.random()*string.length+1)
+      let char = Math.floor(Math.random() * string.length) // Fixed: removed +1
       password += string.charAt(char)
-      
     }
 
     setdefaultpassword(password)
+  }, [length, numAllowed, charallowed])
 
-  }, [length, numAllowed, charallowed,setdefaultpassword])
+  const copyToClipboard = useCallback(() => {
+    passwordRef.current?.select()
+    passwordRef.current?.setSelectionRange(0, 99999)
+    window.navigator.clipboard.writeText(defaultpassword)
+    
+    alert("Password copied to clipboard!")
+  }, [defaultpassword])
 
   return (
     <>
@@ -32,11 +41,15 @@ function App() {
       <h2 className='text-2xl text-center'>Password Generator</h2>
       <div className='flex shadow rounded-lg overflow-hidden mb-4'>
         <input type="text"
+        ref={passwordRef}
         value={defaultpassword}
         className='bg-white outline-none w-full py-2 px-3 rounded'
         placeholder='defaultpassword'
         readOnly />
-        <button className='mx-1 rounded bg-black p-1'>
+        <button 
+          onClick={copyToClipboard}
+          className='mx-1 rounded bg-black p-1 hover:bg-gray-800 transition-colors'
+        >
           Copy
         </button>
       </div>
