@@ -1,20 +1,23 @@
-function Inputbox(
+import { useId } from "react";
+function Inputbox({
     amount,
     onamountchange,
     oncurrencychange,
     label, //this one takes either from or to.
     currencyoptions = [], //empty array in case there is no data coming from the API call 
-    selectcurrency = "usd", // this is the default currency that has been selected 
+    selectcurrency = "USD",
     currencydisable = false , // in the to section we will disable the currency and the amount change optional btw  
-    amountdisable = true
-
+    amountdisable = false
+}
 ) {
+    let amountinputid = useId()
     return (
         <>
         <div>
             <div>
-                <label htmlFor={amount}> {label} </label>
+                <label htmlFor={amount} id={amountinputid}> {label} </label>
                 <input type="number"
+                id={amountinputid}
                 placeholder="amount"
                 disabled = {amountdisable}
                 value={amount} // what actually is in the field after taking input from the user. 
@@ -24,12 +27,17 @@ function Inputbox(
         </div>
         <div>
             <p>Currency Type</p>
-            <select 
+            <select
             value={selectcurrency}
             disabled = {currencydisable}
-            onChange={(e)=> oncurrencychange(e.target.value)}
+            onChange={(e)=> oncurrencychange && oncurrencychange(e.target.value) 
+            }
             >
-                <option value={currency}></option>
+                {currencyoptions.map((currency)=>{
+                return <option key={currency} value={currency}> 
+                    {currency}
+                </option>
+                })}
             </select>
         </div>
         </>
