@@ -3,13 +3,15 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import Footer from './components/Footer/Footer'
+import Header from './components/Header/header'
+import Home from './components/Home/home' 
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <h1 className='bg-green-400 rounded w-fit'>React Router</h1>
     </>
   )
 }
