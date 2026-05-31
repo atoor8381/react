@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider, createRoutesFromElements,Route } from 'react-router-dom'
 import Home from './components/Home/Home.jsx'
 import About from './components/About/About.jsx'
+import User from './components/User/User.jsx'
 import {Github, loaderfunction} from './components/Github/Github.jsx'
 
 
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route
       loader = {loaderfunction}
       path = "/Github" element = {<Github />} />
+      <Route path = "/user/:userid" element = {<User />} />
     </Route>
   )
 )
